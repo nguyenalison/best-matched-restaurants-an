@@ -18,5 +18,6 @@
         <property name="hibernate.format_sql" >true </property>
         <!-- Mapping entity file -->
         <mapping class="org.alisonnguyen.model.Restaurant"/>
+        <mapping class="org.alisonnguyen.model.Cuisine"/>
     </session-factory>
 </hibernate-configuration>
