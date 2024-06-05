@@ -43,11 +43,11 @@ scalability outwiegh simplicity of structure, learning curve for set up and the 
 
 ## 1. Single Map with Composite Key
    RestaurantName: {customerRating, distance, price, cuisine}
-    ### Advantages:
-     - Simple structure
+  ### Advantages:
+    - Simple structure
      - Easy implementation with need for frameworks
      - Low overhead becuase of simplicity 
-    ### Caveat:
+  ### Caveat:
      - Brute force solution is inefficent for large data sets
      - Memory consumption for large datasets
      - Limited flexibility for updating and adding criteria
