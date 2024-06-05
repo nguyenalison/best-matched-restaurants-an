@@ -24,23 +24,23 @@ than 5 matches all of them will be returned. If are are no matches the user will
 1. Single Map with Composite Key
    RestaurantName: {customerRating, distance, price, cuisine}
     ### Advantages:
-        - Simple structure
-        - Easy implementation with need for frameworks
-        - Low overhead becuase of simplicity 
+     - Simple structure
+     - Easy implementation with need for frameworks
+     - Low overhead becuase of simplicity 
     ### Caveat:
-        - Brute force solution is inefficent for large data sets
-        - Memory consumption for large datasets
-        - Limited flexibility for updating and adding criteria
+     - Brute force solution is inefficent for large data sets
+     - Memory consumption for large datasets
+     - Limited flexibility for updating and adding criteria
 
 2. Use Hibernate Object Relational Mapping
    ### Advantages:
-        - Data peristence does not need to be reloaded every run
-        - CRUD operations availabile through ORM
-        - Maintainable and scaleable for large data sets and as business requirements added 
+     - Data peristence does not need to be reloaded every run
+     - CRUD operations availabile through ORM
+     - Maintainable and scaleable for large data sets and as business requirements added 
    ### Caveat:
-        - Complexity in set up and configuration
-        - Performance overhead because of abstraction 
-        - Comeplexity in strucutre makes debugging more complex 
+     - Complexity in set up and configuration
+     - Performance overhead because of abstraction 
+     - Comeplexity in strucutre makes debugging more complex 
 
 
 # Setup 
