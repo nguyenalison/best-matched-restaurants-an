@@ -13,7 +13,7 @@ public class App {
     private static final int MAX_RATING = 5;
     private static final int MIN_DISTANCE = 1;
     private static final int MAX_DISTANCE = 10;
-    private static final int MIN_PRICE = 5;
+    private static final int MIN_PRICE = 10;
     private static final int MAX_PRICE = 50;
     private static final String  RESTAURANT_CSV = "src/main/resources/data/restaurants.csv";
     private static final String  CUISINE_CSV = "src/main/resources/data/cuisines.csv";
@@ -34,25 +34,35 @@ public class App {
         int userInputRating, userInputDistance, userInputPrice;
 
         System.out.println("\n\n---------WELCOME TO ALI'S YELP---------------------------------");
-        System.out.println("Enter the name of the restaurant (Leave blank if none): ");
-        userInputRestaurant = scanner.nextLine();
+        boolean continueSearching = true;
+        while (continueSearching) {
+            System.out.println("\nEnter the name of the restaurant (Leave blank if none): ");
+            userInputRestaurant = scanner.nextLine();
 
-        userInputRating = validNumericInput(scanner, "rating", Integer::parseInt, 0, MIN_RATING, MAX_RATING);
+            userInputRating = validNumericInput(scanner, "rating", Integer::parseInt, 0, MIN_RATING, MAX_RATING);
 
-        userInputDistance = validNumericInput(scanner, "distance", Integer::parseInt, 0, MIN_DISTANCE, MAX_DISTANCE);
+            userInputDistance = validNumericInput(scanner, "distance", Integer::parseInt, 0, MIN_DISTANCE, MAX_DISTANCE);
 
-        userInputPrice = validNumericInput(scanner, "max budget", Integer::parseInt, 0, MIN_PRICE, MAX_PRICE);
+            userInputPrice = validNumericInput(scanner, "max budget", Integer::parseInt, 0, MIN_PRICE, MAX_PRICE);
 
-        System.out.println("Enter the preferred cuisine (Leave blank if none): ");
-        userInputCuisine = scanner.nextLine();
+            System.out.println("Enter the preferred cuisine (Leave blank if none): ");
+            userInputCuisine = scanner.nextLine();
 
-        String header = String.format("%-20s %-10s %-10s %-10s %-20s", "Restaurant", "Rating", "Distance", "Price", "Cuisine");
-        matches = (service.matchByCriteria(userInputRestaurant,
-                userInputRating,
-                userInputDistance,
-                userInputPrice,
-                userInputCuisine));
-        System.out.println(header + matches);
+            String header = String.format("%-20s %-10s %-10s %-10s %-20s", "Restaurant", "Rating", "Distance", "Price", "Cuisine");
+            matches = (service.matchByCriteria(userInputRestaurant,
+                    userInputRating,
+                    userInputDistance,
+                    userInputPrice,
+                    userInputCuisine));
+            System.out.println(header);
+            matches.forEach(System.out::println);
+
+            System.out.println("\nDo you want to search again? (y/n)");
+            String continueInput = scanner.nextLine();
+            continueSearching = continueInput.equalsIgnoreCase("y");
+        }
+        System.out.println("Thanks for using Ali's Yelp. Goodbye!");
+
     }
 
     private static <T extends Number> T validNumericInput(Scanner scan, String prompt, java.util.function.Function<String, T> parser, T defaultValue, int minValue, int maxValue) {

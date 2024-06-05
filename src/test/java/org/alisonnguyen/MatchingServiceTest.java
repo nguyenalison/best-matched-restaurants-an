@@ -2,74 +2,66 @@ package org.alisonnguyen;
 
 import junit.framework.TestCase;
 import org.alisonnguyen.model.Restaurant;
+import org.alisonnguyen.repository.CuisineRepository;
+import org.alisonnguyen.repository.RestaurantRepository;
 import org.alisonnguyen.service.MatchingService;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 
 public class MatchingServiceTest extends TestCase {
     private MatchingService matchingService;
-
+    private static final String  RESTAURANT_CSV = "src/main/resources/data/restaurants.csv";
+    private static final String  CUISINE_CSV = "src/main/resources/data/cuisines.csv";
     @BeforeEach
     public void setUp() {
+
         matchingService = new MatchingService();
-        // Optionally, populate the database with test data here
+
+        CuisineRepository cuisineRepo = new CuisineRepository();
+        cuisineRepo.populateCuisineData(CUISINE_CSV);
+
+        RestaurantRepository restaurantRepo  = new RestaurantRepository();
+        restaurantRepo.populateRestaurantData(RESTAURANT_CSV);
     }
 
     @Test
-    public void testMatchByCriteriaWithName() {
-        List<Restaurant> results = matchingService.matchByCriteria("mcdonald", null, null, null, null);
-        assertNotNull(results);
-        assertTrue(results.size() <= 5);
-        assertTrue(results.stream().allMatch(r -> r.getName().toLowerCase().contains("mcdonald")));
+    public void testMatchByRatingDistancePrice() {
+        List<Restaurant> results = matchingService.matchByCriteria("", 4, 1, 10, null);
+        List<String> expectedNames = Arrays.asList("Deliciousgenix", "McDonalds");
+        List<String> resultNames = results.stream().map(Restaurant::getName).collect(Collectors.toList());
+        assertEquals(expectedNames, resultNames);
     }
 
     @Test
-    public void testMatchByCriteriaWithRating() {
-        List<Restaurant> results = matchingService.matchByCriteria(null, 3, null, null, null);
-        assertNotNull(results);
-        assertTrue(results.size() <= 5);
-        assertTrue(results.stream().allMatch(r -> r.getCustomerRating() >= 3));
+    public void testMatchByRatingDistancePriceUpperBound() {
+        List<Restaurant> results = matchingService.matchByCriteria("", 5, 10, 50, null);
+        List<String> expectedNames = Arrays.asList("Crisp Delicious", "Gusto Delicious", "Local Delicious", "Deliciousbea", "Deliciousio");
+        List<String> resultNames = results.stream().map(Restaurant::getName).collect(Collectors.toList());
+        assertEquals(expectedNames, resultNames);
     }
 
     @Test
-    public void testMatchByCriteriaWithDistance() {
-        List<Restaurant> results = matchingService.matchByCriteria(null, null, 5, null, null);
-        assertNotNull(results);
-        assertTrue(results.size() <= 5);
-        assertTrue(results.stream().allMatch(r -> r.getDistance() <= 5));
+    public void testMatchByRatingDistancePriceLowerBound() {
+        List<Restaurant> results = matchingService.matchByCriteria("", 1, 10, 10, null);
+        List<String> expectedNames = Arrays.asList("Deliciousgenix", "Deliciousquipo", "Hut Chow", "Hideout Chow", "Chowish");
+        List<String> resultNames = results.stream().map(Restaurant::getName).collect(Collectors.toList());
+        assertEquals(expectedNames, resultNames);
     }
 
     @Test
-    public void testMatchByCriteriaWithPrice() {
-        List<Restaurant> results = matchingService.matchByCriteria(null, null, null, 15, null);
-        assertNotNull(results);
-        assertTrue(results.size() <= 5);
-        assertTrue(results.stream().allMatch(r -> r.getPrice() <= 15));
+    public void testInvalidInput() {
+        List<Restaurant> results = matchingService.matchByCriteria("", -1, -10, -10, null);
+        List<String> expectedNames = Arrays.asList();
+        List<String> resultNames = results.stream().map(Restaurant::getName).collect(Collectors.toList());
+        assertEquals(expectedNames, resultNames);
     }
 
-
-    public void testSortOrder() {
-        List<Restaurant> results = matchingService.matchByCriteria(null, null, null, null, "test");
-        assertNotNull(results);
-        assertTrue(results.size() <= 5);
-        // Ensure results are sorted by distance, then rating, then price, then name
-        for (int i = 1; i < results.size(); i++) {
-            Restaurant prev = results.get(i - 1);
-            Restaurant current = results.get(i);
-            assertTrue(prev.getDistance() <= current.getDistance() ||
-                    (prev.getDistance() == current.getDistance() && prev.getCustomerRating() >= current.getCustomerRating()) ||
-                    (prev.getDistance() == current.getDistance() && prev.getCustomerRating() == current.getCustomerRating() && prev.getPrice() <= current.getPrice()) ||
-                    (prev.getDistance() == current.getDistance() && prev.getCustomerRating() == current.getCustomerRating() && prev.getPrice() == current.getPrice() && prev.getName().compareTo(current.getName()) <= 0));
-        }
-    }
-
-    @Test
-    public void testMatchByCriteriaNoMatches() {
-        List<Restaurant> results = matchingService.matchByCriteria("nonexistent", null, null, null, null);
-        assertNotNull(results);
-        assertEquals(0, results.size());
-    }
 }

@@ -1,6 +1,8 @@
 package org.alisonnguyen.service;
 import jakarta.persistence.*;
 import org.alisonnguyen.model.Restaurant;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -57,7 +59,7 @@ public class MatchingService {
         List<Restaurant> restaurants = query.getResultList();
         entityManager.close();
 
-        // Sort the list based on the following priority: distance -> rating -> price -> lexogeographically
+//        // Sort the list based on the following priority: distance -> rating -> price -> lexogeographically
         restaurants.sort(Comparator.comparing(Restaurant::getDistance)
                 .thenComparing(Comparator.comparing(Restaurant::getCustomerRating).reversed())
                 .thenComparing(Restaurant::getPrice)
@@ -66,4 +68,5 @@ public class MatchingService {
 
         return restaurants;
     }
+
 }

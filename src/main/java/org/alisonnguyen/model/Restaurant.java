@@ -1,6 +1,8 @@
 package org.alisonnguyen.model;
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.Objects;
+
 @Entity
 @Table(name = "restaurant")
 public class Restaurant {
@@ -17,6 +19,16 @@ public class Restaurant {
     @ManyToOne
     @JoinColumn(name = "cuisineId")
     private Cuisine cuisine;
+
+    public Restaurant(){}
+    public Restaurant(String name, int customerRating, int distance, int price, int cuisineId) {
+        this.name = name;
+        this.customerRating = customerRating;
+        this.distance = distance;
+        this.price = price;
+        this.cuisineId = cuisineId;
+    }
+
 
     public String getName() {
         return name;
@@ -72,11 +84,17 @@ public class Restaurant {
                 name, customerRating, distance, price, cuisine.getName());
     }
 
-    public void printRestaurants(List<Restaurant> restaurantList){
-        String header = String.format("%-20s %-10s %-10s %-10s %-20s", "Restaurant", "Rating", "Distance", "Price", "Cuisine");
-        System.out.println(header);
-        for (Restaurant restaurant : restaurantList) {
-            System.out.println(restaurant);
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Restaurant)) return false;
+        Restaurant that = (Restaurant) o;
+        return getCustomerRating() == that.getCustomerRating() && getDistance() == that.getDistance() && getPrice() == that.getPrice() && getCuisineId() == that.getCuisineId() && Objects.equals(getName(), that.getName());
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getCustomerRating(), getDistance(), getPrice(), getCuisineId());
+    }
+
 }
