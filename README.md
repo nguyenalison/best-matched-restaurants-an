@@ -41,7 +41,7 @@ scalability outwiegh simplicity of structure, learning curve for set up and the 
 
 **DataLoader.java** used to read CSV files and populate the database. If data and database exist then it skips the CSV loading. 
 
-##1. Single Map with Composite Key
+## 1. Single Map with Composite Key
    RestaurantName: {customerRating, distance, price, cuisine}
     ### Advantages:
      - Simple structure
@@ -52,7 +52,7 @@ scalability outwiegh simplicity of structure, learning curve for set up and the 
      - Memory consumption for large datasets
      - Limited flexibility for updating and adding criteria
 
-##2. Use Hibernate Object Relational Mapping
+## 2. Use Hibernate Object Relational Mapping
    ### Advantages:
      - Data peristence does not need to be reloaded every run
      - CRUD operations availabile through ORM
