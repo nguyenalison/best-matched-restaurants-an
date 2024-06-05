@@ -11,6 +11,7 @@ public class MatchingService {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("my-persistence");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
+
         String jpql = "SELECT r FROM Restaurant r";
 
         // Cuisine is a special case because it has to be joined
@@ -34,7 +35,11 @@ public class MatchingService {
             jpql += " AND r.price <= :price";
         }
 
-//        System.out.println(jpql);
+        if (name.isEmpty() && cuisine.isEmpty() && rating == 0 && distance == 0 && price == 0) {
+            jpql += " AND r.distance <= 1";
+        }
+
+        System.out.println(jpql);
         TypedQuery<Restaurant> query = entityManager.createQuery(jpql, Restaurant.class);
 
         if (cuisine != null && !cuisine.isEmpty()) {
@@ -59,7 +64,7 @@ public class MatchingService {
         List<Restaurant> restaurants = query.getResultList();
         entityManager.close();
 
-//        // Sort the list based on the following priority: distance -> rating -> price -> lexogeographically
+        // Sort the list based on the following priority: distance -> rating -> price -> lexogeographically
         restaurants.sort(Comparator.comparing(Restaurant::getDistance)
                 .thenComparing(Comparator.comparing(Restaurant::getCustomerRating).reversed())
                 .thenComparing(Restaurant::getPrice)

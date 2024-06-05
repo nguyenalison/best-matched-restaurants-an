@@ -21,6 +21,7 @@ public class Restaurant {
     private Cuisine cuisine;
 
     public Restaurant(){}
+
     public Restaurant(String name, int customerRating, int distance, int price, int cuisineId) {
         this.name = name;
         this.customerRating = customerRating;
@@ -28,7 +29,6 @@ public class Restaurant {
         this.price = price;
         this.cuisineId = cuisineId;
     }
-
 
     public String getName() {
         return name;
@@ -82,19 +82,6 @@ public class Restaurant {
     public java.lang.String toString() {
         return String.format("\n%-20s %-10d %-10d %-10d %-20s",
                 name, customerRating, distance, price, cuisine.getName());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Restaurant)) return false;
-        Restaurant that = (Restaurant) o;
-        return getCustomerRating() == that.getCustomerRating() && getDistance() == that.getDistance() && getPrice() == that.getPrice() && getCuisineId() == that.getCuisineId() && Objects.equals(getName(), that.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getCustomerRating(), getDistance(), getPrice(), getCuisineId());
     }
 
 }

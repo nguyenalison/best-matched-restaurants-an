@@ -1,7 +1,6 @@
 package org.alisonnguyen.repository;
 
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -16,6 +15,7 @@ public class DataLoader {
     private SessionFactory factory;
     private Session session;
 
+    // DataLoaders are used to make this application extendable for other type of data
     public DataLoader(Class<?>... annotatedClasses) {
         Configuration config = new Configuration().configure("hibernate.cfg.xml");
         for (Class<?> annotatedClass : annotatedClasses) {
@@ -24,6 +24,7 @@ public class DataLoader {
         factory = config.buildSessionFactory();
     }
 
+    // Uses functional interfaces to  read in a line and map to an entity
     public <T> void populateDatabase(String csvFilePath, Class<T> entityClass, BiConsumer<String[], T> entityMapper) {
         session = factory.openSession();
 
@@ -63,9 +64,7 @@ public class DataLoader {
             session.getTransaction().commit();
         } catch (IOException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
-        } catch (CsvValidationException e) {
-            throw new RuntimeException(e);
-        } finally {
+        }finally {
             // Close the session
             session.close();
         }

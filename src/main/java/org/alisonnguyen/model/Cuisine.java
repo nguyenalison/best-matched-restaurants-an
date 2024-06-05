@@ -8,9 +8,7 @@ public class Cuisine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
-
     @OneToMany(targetEntity = Restaurant.class, cascade = {CascadeType.ALL})
     private List<Restaurant> restaurants;
 

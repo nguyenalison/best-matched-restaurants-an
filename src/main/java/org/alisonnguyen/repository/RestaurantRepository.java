@@ -17,13 +17,13 @@ public class RestaurantRepository {
             restaurant.setPrice(Integer.parseInt(line[3]));
             int cuisineId = Integer.parseInt(line[4]);
 
+            // Getting the cuisine that is mapped to cuisine entity using cuisineId from Restaurant
             Cuisine cuisine = dataLoader.getSession().get(Cuisine.class, cuisineId);
             if (cuisine == null) {
-                // Log an error and skip adding the restaurant
                 System.err.println("Cuisine with ID " + cuisineId + " not found for restaurant " + restaurant.getName());
-//                return;
             }
-            // Ensure the Cuisine has the Restaurant in its list
+
+            // Ensure the newly added restaurant is added to the cuisine_restaurant joined table
             List<Restaurant> restaurants = cuisine.getRestaurants();
             if (restaurants == null) {
                 restaurants = new ArrayList<>();
@@ -31,10 +31,7 @@ public class RestaurantRepository {
             }
             restaurants.add(restaurant);
             restaurant.setCuisine(cuisine);
-
         });
-
-        // Close the CsvToDatabase instance
         dataLoader.close();
     }
 

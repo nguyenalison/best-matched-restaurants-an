@@ -27,8 +27,6 @@ public class App {
         RestaurantRepository restaurantRepo  = new RestaurantRepository();
         restaurantRepo.populateRestaurantData(RESTAURANT_CSV);
 
-
-
         Scanner scanner = new Scanner(System.in);
         String userInputRestaurant, userInputCuisine;
         int userInputRating, userInputDistance, userInputPrice;
@@ -65,6 +63,7 @@ public class App {
 
     }
 
+    // Used generics if wanted values of input to be doubles for future implementation
     private static <T extends Number> T validNumericInput(Scanner scan, String prompt, java.util.function.Function<String, T> parser, T defaultValue, int minValue, int maxValue) {
         T input = null;
         while (input == null || input.doubleValue() < minValue || input.doubleValue() > maxValue) {
