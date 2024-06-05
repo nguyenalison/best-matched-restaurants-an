@@ -63,10 +63,20 @@ My original approach was to use NamedQueries for each type of criteria (matchByN
 I have decided to use an TypedQuery Entity manager which is used to manage peristing the entities. This is a good decision for scalability, should 
 there be CRUD implementation for peristing to the database. For this application Entity Manager is only used to query over entites. 
 
+## App
+1. When the application is run, Hibernate logging will display indicating database connection and dataloading
+2. Application will asked user for input for criteria. If the input values are invalid the user will be asked to enter valid input
+    - User can press enter to leave blank if they don't have a preference
+3. All top results will display: Restaurant Name, customer rating, distance, price, and cuisine name
 
 # Setup 
 1. Before running have Java and Maven installed
 2. Clone this repo
 3. Configure your database settings in hibernate.cfg.xml
-   - Change root and password to match that of your local host database 
-4. mvn clean compile exec:java -Dexec.mainClass="org.alisonnguyen.App"
+   - Modify the database connection settings (connection.url, connection.username, connection.password, etc.) as needed for your MySQL setup. 
+5. mvn clean compile exec:java -Dexec.mainClass="org.alisonnguyen.App"
+   
+
+## Future Implementation and Next Steps
+1. Extensive Unit testing
+2. Prioritize Restaurant name who's input substring appreares earlier in the string (at the moment just if name contains substring) 
