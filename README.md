@@ -21,6 +21,13 @@ than 5 matches all of them will be returned. If are are no matches the user will
 # Approaches & Decisions
 The following are viable solutions however come with their caveats. This application will take approach #2 for the 
 reasons that efficiency, maintainability and scalability outwiegh simplicity of structure, learning curve for set up and the inefficiency. 
+## Model
+1. Restaurant
+  - String Restaurant name
+  - int customerRatings
+  - int distance
+  - int price
+  - int cuisineId
 
 ## Repository 
 1. Single Map with Composite Key
@@ -42,7 +49,7 @@ reasons that efficiency, maintainability and scalability outwiegh simplicity of 
    ### Caveat:
      - Complexity in set up and configuration
      - Performance overhead because of abstraction 
-     - Comeplexity in strucutre makes debugging more complex 
+     - Without a frontend interface Hibernate logs can be cluttered and difficult for users to interpret 
 
 
 # Setup 
