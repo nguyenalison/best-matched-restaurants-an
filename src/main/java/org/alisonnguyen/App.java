@@ -23,31 +23,28 @@ public class App {
         CuisineRepository cuisineRepo = new CuisineRepository();
         cuisineRepo.populateCuisineData(CUISINE_CSV);
 
-        System.out.println(service.matchByCriteria("",3,2,15,""));
-
-
         Scanner scanner = new Scanner(System.in);
         String userInputRestaurant, userInputCuisine;
         int userInputRating, userInputDistance, userInputPrice;
-//        System.out.println("Enter the name of the restaurant (Leave blank if none): ");
-//        userInputRestaurant = scanner.nextLine();
-//
-//        userInputRating = validNumericInput(scanner, "rating", Integer::parseInt, 0);
-//
-//        userInputDistance = validNumericInput(scanner, "distance", Integer::parseInt, 0);
-//
-//        userInputPrice = validNumericInput(scanner, "max budget", Integer::parseInt, 0);
-//
-//        System.out.println("Enter the preferred cuisine (Leave blank if none): ");
-//        userInputCuisine = scanner.nextLine();
-//
-//        String header = String.format("%-20s %-10s %-10s %-10s %-20s", "Restaurant", "Rating", "Distance", "Price", "Cuisine");
-//        matches = (service.matchByCriteria(userInputRestaurant,
-//                userInputRating,
-//                userInputDistance,
-//                userInputPrice,
-//                userInputCuisine));
-//        System.out.println(header + matches);
+        System.out.println("Enter the name of the restaurant (Leave blank if none): ");
+        userInputRestaurant = scanner.nextLine();
+
+        userInputRating = validNumericInput(scanner, "rating", Integer::parseInt, 0);
+
+        userInputDistance = validNumericInput(scanner, "distance", Integer::parseInt, 0);
+
+        userInputPrice = validNumericInput(scanner, "max budget", Integer::parseInt, 0);
+
+        System.out.println("Enter the preferred cuisine (Leave blank if none): ");
+        userInputCuisine = scanner.nextLine();
+
+        String header = String.format("%-20s %-10s %-10s %-10s %-20s", "Restaurant", "Rating", "Distance", "Price", "Cuisine");
+        matches = (service.matchByCriteria(userInputRestaurant,
+                userInputRating,
+                userInputDistance,
+                userInputPrice,
+                userInputCuisine));
+        System.out.println(header + matches);
     }
 
     private static <T extends Number> T validNumericInput(Scanner scan, String prompt,

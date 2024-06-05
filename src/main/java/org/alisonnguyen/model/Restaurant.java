@@ -1,31 +1,6 @@
 package org.alisonnguyen.model;
 import jakarta.persistence.*;
-
 import java.util.List;
-
-
-@NamedQueries({
-        @NamedQuery(
-                name = "matchByName",
-                query = "SELECT r FROM Restaurant r WHERE LOWER(r.name) LIKE '%' || LOWER(:restaurantName) || '%'"
-        ),
-        @NamedQuery(
-                name = "matchByRating",
-                query = "SELECT r FROM Restaurant r WHERE r.customerRating >= :preferredRating ORDER BY r.customerRating ASC"
-        ),
-        @NamedQuery(
-                name = "matchByDistance",
-                query = "SELECT r FROM Restaurant r WHERE r.distance <= :distance ORDER BY r.distance ASC"
-        ),
-        @NamedQuery(
-                name = "matchByBudget",
-                query = "SELECT r FROM Restaurant r WHERE r.price <= :price ORDER BY r.price ASC"
-        ),
-        @NamedQuery(
-                name = "matchByCuisine",
-                query = "SELECT r FROM Restaurant r JOIN Cuisine c ON r.cuisineId= c.id WHERE LOWER(c.name) LIKE '%' || LOWER(:cuisine) || '%'"
-        )
-})
 
 @Entity
 @Table(name = "restaurant")
@@ -39,6 +14,7 @@ public class Restaurant {
     private double distance;
     private double price;
     private int cuisineId;
+
     // Getters and setters
     public int getId() {
         return id;
