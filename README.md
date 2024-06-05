@@ -95,8 +95,8 @@ I tried to run my Docker container. For this project Docker is not included howe
 3. Configure your database settings in hibernate.cfg.xml
      - Go into hibernate.cfg.xml
      - Modify the database connection settings (connection.url, connection.username, connection.password, etc.) as needed for your MySQL setup.
-5. Run the following command: >mvn clean compile exec:java -Dexec.mainClass="org.alisonnguyen.App"
+5. Run the following command: mvn clean compile exec:java -Dexec.mainClass="org.alisonnguyen.App"
 
 #Set up for UnitTest
 1. Ensure database connection
-2. Run the following command: >mvn clean test -Dtest=MatchingServiceTest
+2. Run the following command: mvn clean test -Dtest=MatchingServiceTest
