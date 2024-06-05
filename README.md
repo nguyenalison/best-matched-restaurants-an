@@ -68,5 +68,5 @@ there be CRUD implementation for peristing to the database. For this application
 1. Before running have Java and Maven installed
 2. Clone this repo
 3. Configure your database settings in hibernate.cfg.xml
-   - Change root and password to match that your local host database 
+   - Change root and password to match that of your local host database 
 4. mvn clean compile exec:java -Dexec.mainClass="org.alisonnguyen.App"
