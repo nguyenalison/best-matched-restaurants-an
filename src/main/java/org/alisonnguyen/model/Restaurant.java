@@ -16,6 +16,14 @@ import java.util.List;
         @NamedQuery(
                 name = "matchByDistance",
                 query = "SELECT r FROM Restaurant r WHERE r.distance <= :distance ORDER BY r.distance ASC"
+        ),
+        @NamedQuery(
+                name = "matchByBudget",
+                query = "SELECT r FROM Restaurant r WHERE r.price <= :price ORDER BY r.price ASC"
+        ),
+        @NamedQuery(
+                name = "matchByCuisine",
+                query = "SELECT r FROM Restaurant r JOIN Cuisine c ON r.cuisineId= c.id WHERE LOWER(c.name) LIKE '%' || LOWER(:cuisine) || '%'"
         )
 })
 
@@ -30,7 +38,6 @@ public class Restaurant {
     private int customerRating;
     private double distance;
     private double price;
-
     private int cuisineId;
     // Getters and setters
     public int getId() {
