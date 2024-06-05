@@ -13,14 +13,13 @@ than 5 matches all of them will be returned. If are are no matches the user will
 - JUnit
 
 # Project Structure
-- *org.alisonnguyen.model*: Contains the entity classes representing database tables
-- *org.alisonnguyen.repository*: Contains the repository interfaces for loading data into the database
-- *org.alisonnguyen.services*: Contains the functionality for querying by criteria 
+- **org.alisonnguyen.model**: Contains the entity classes representing database tables
+- **org.alisonnguyen.repository**: Contains the repository interfaces for loading data into the database
+- **org.alisonnguyen.services**: Contains the functionality for querying by criteria
+- **src/main/resources/data**: Location of CSV files
 - App.java is the main driver for where the application will be run 
 
-# Approaches & Decisions
-The following are viable solutions however come with their caveats. This application will take approach #2 for the 
-reasons that efficiency, maintainability and scalability outwiegh simplicity of structure, learning curve for set up and the inefficiency. 
+
 ## Model
 1. Restaurant
   - String Restaurant name
@@ -28,8 +27,16 @@ reasons that efficiency, maintainability and scalability outwiegh simplicity of 
   - int distance
   - int price
   - int cuisineId
+2. Cuisine
+  - int id
+  - String Name 
 
-## Repository 
+# Repository 
+### Approaches & Decisions
+The following are viable solutions however come with their caveats. This application will take approach #2 for the reasons that efficiency, maintainability and scalability outwiegh simplicity of structure, learning curve for set up and the inefficiency. 
+
+**DataLoader.java** used to read CSV files and populate the database. If data and database exist then it skips the CSV loading
+
 1. Single Map with Composite Key
    RestaurantName: {customerRating, distance, price, cuisine}
     ### Advantages:
@@ -50,6 +57,11 @@ reasons that efficiency, maintainability and scalability outwiegh simplicity of 
      - Complexity in set up and configuration
      - Performance overhead because of abstraction 
      - Without a frontend interface Hibernate logs can be cluttered and difficult for users to interpret 
+
+## Service
+My original approach was to use NamedQueries for each type of criteria (matchByName, matchByRating, matchByDistance, etc.).
+I have decided to use an TypedQuery Entity manager which is used to manage peristing the entities. This is a good decision for scalability, should 
+there be CRUD implementation for peristing to the database. For this application Entity Manager is only used to query over entites. 
 
 
 # Setup 
