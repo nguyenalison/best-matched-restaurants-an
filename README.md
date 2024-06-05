@@ -19,6 +19,8 @@ than 5 matches all of them will be returned. If are are no matches the user will
 - App.java is the main driver for where the application will be run 
 
 # Approaches & Decisions
+The following are viable solutions however come with their caveats. This application will take approach #2 for the 
+reasons that efficiency, maintainability and scalability outwiegh simplicity of structure, learning curve for set up and the inefficiency. 
 
 ## Repository 
 1. Single Map with Composite Key
