@@ -21,6 +21,8 @@ than 5 matches all of them will be returned. If are are no matches the user will
 # Approaches & Decisions
 
 ## Repository 
+The following are viable solutions however come with their caveats. This application will take approach #2 for the 
+reasons of efficiency, maintainability and scalability outwiegh simplicity the learning curve and set up. 
 1. Single Map with Composite Key
    RestaurantName: {customerRating, distance, price, cuisine}
     ### Advantages:

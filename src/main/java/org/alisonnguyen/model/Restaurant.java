@@ -1,28 +1,22 @@
 package org.alisonnguyen.model;
 import jakarta.persistence.*;
 import java.util.List;
-
 @Entity
 @Table(name = "restaurant")
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
     private int customerRating;
-    private double distance;
-    private double price;
+    private int distance;
+    private int price;
+    @Column(insertable = false, updatable = false)
     private int cuisineId;
 
-    // Getters and setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "cuisineId")
+    private Cuisine cuisine;
 
     public String getName() {
         return name;
@@ -44,7 +38,7 @@ public class Restaurant {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(int distance) {
         this.distance = distance;
     }
 
@@ -52,22 +46,30 @@ public class Restaurant {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public int getCuisine() {
+    public int getCuisineId() {
         return cuisineId;
     }
 
-    public void setCuisine(int cuisineId) {
+    public void setCuisineId(int cuisineId) {
         this.cuisineId = cuisineId;
+    }
+
+    public Cuisine getCuisine() {
+        return cuisine;
+    }
+
+    public void setCuisine(Cuisine cuisine) {
+        this.cuisine = cuisine;
     }
 
     @java.lang.Override
     public java.lang.String toString() {
-        return String.format("\n%-20s %-10d %-10.2f %-10.2f %-20s",
-                name, customerRating, distance, price, cuisineId);
+        return String.format("\n%-20s %-10d %-10d %-10d %-20s",
+                name, customerRating, distance, price, cuisine.getName());
     }
 
     public void printRestaurants(List<Restaurant> restaurantList){

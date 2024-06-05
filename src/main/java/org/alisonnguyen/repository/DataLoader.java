@@ -53,7 +53,6 @@ public class DataLoader {
                     session.save(entity);
                 }
 
-                // Close CSV reader
                 reader.close();
                 System.out.println(entityClass.getSimpleName() + " data populated successfully!");
             } else {

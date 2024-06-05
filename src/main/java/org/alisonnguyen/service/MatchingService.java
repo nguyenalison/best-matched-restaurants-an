@@ -11,6 +11,8 @@ public class MatchingService {
         entityManager.getTransaction().begin();
         String jpql = "SELECT r FROM Restaurant r";
 
+        // Cuisine is a special case because it has to be joined
+        // If not where 1=1 will always be true allowing the other statements to be "AND"-ed to the JPQL
         if (cuisine != null && !cuisine.isEmpty()) {
             jpql += " JOIN Cuisine c ON r.cuisineId= c.id WHERE LOWER(c.name) LIKE LOWER(:cuisine)";
         } else {
@@ -30,7 +32,7 @@ public class MatchingService {
             jpql += " AND r.price <= :price";
         }
 
-        System.out.println(jpql);
+//        System.out.println(jpql);
         TypedQuery<Restaurant> query = entityManager.createQuery(jpql, Restaurant.class);
 
         if (cuisine != null && !cuisine.isEmpty()) {
@@ -55,7 +57,7 @@ public class MatchingService {
         List<Restaurant> restaurants = query.getResultList();
         entityManager.close();
 
-        // Sort the list based on the rules provided
+        // Sort the list based on the following priority: distance -> rating -> price -> lexogeographically
         restaurants.sort(Comparator.comparing(Restaurant::getDistance)
                 .thenComparing(Comparator.comparing(Restaurant::getCustomerRating).reversed())
                 .thenComparing(Restaurant::getPrice)

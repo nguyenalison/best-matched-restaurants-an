@@ -2,7 +2,6 @@ package org.alisonnguyen.model;
 import jakarta.persistence.*;
 import java.util.List;
 
-
 @Entity
 @Table(name = "cuisine")
 public class Cuisine {
